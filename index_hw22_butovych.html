@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>hw22</title>
+</head>
+<body>
+	<script type="text/javascript">
+		// Задача используя mathjs считать формулы.
+		// Улучшить код, то есть переписать на классы.
+		// И написать кастомную ошибку если не верные параметры переданы выбросить ее.
+		// Есть код!
+		const parameters = new Map();
+		parameters.set('D', 10).set('W', 20).set('H', 23).set('T', 54);
+		const f1 = 'H+W';
+		const f2 = 'T+W';
+		const f3 = 'D*W';
+		const f4 = 'D*W*T';
+		function evaluate(params) {
+			const param1 = params[0];
+			const param2 = params[1];
+			const param3 = params[1];
+			if(param1 == 'H' && param2 === 'W') math.evaluate(f1, {H: param1, W: param2})
+			else if(param1 == 'T' && param2 === 'W') math.evaluate(f2, {T: param1, W: param2})
+			else if(param1 == 'D' && param2 === 'W') math.evaluate(f2, {D: param1, W: param2})
+			else if(param1 == 'D' && param2 === 'W' && param2 === 'T') math.evaluate(f2, {D: param1, W: param2, T: param3})
+		}
+		//--->
+		class HWMath {
+	        static math(param) {
+		        let [H, W] = param;
+		        H = parameters.get(H);
+		        W = parameters.get(W);
+		        const f1 = "H+W";
+		        return evaluate(f1);
+	        }
+	        static evaluate(param) {
+		        const [H, W] = param;
+		        return H === "H" && W === "W";
+	        }
+    	}
+    	class TWMath {
+	        static math(param) {
+		        let [T, W] = param;
+		        T = parameters.get(T);
+		        W = parameters.get(W);
+		        const f2 = "T+W";
+		        return evaluate(f2);
+	        }
+	        static evaluate(param) {
+		        const [T, W] = param;
+		        return T === "T" && W === "W";
+	        }
+    	}
+    	class DWMath {
+	        static math(param) {
+		        let [D, W] = param;
+		        D = parameters.get(D);
+		        W = parameters.get(W);
+		        const f3 = "D*W";
+		        return evaluate(f3);
+	        }
+	        static evaluate(param) {
+		        const [D, W] = param;
+		        return D === "D" && W === "W" && param.length === 2;
+	        }
+    	}
+    	class DWTMath {
+	        static math(param) {
+		        let [D, W, T] = param;
+		        D = parameters.get(D);
+		        W = parameters.get(W);
+		        T = parameters.get(T);
+		        const f4 = "D*W*T";
+		        return evaluate(f4);
+	        }
+	        static evaluate(param) {
+		        const [D, W, T] = param;
+		        return D === "D" && W === "W" && T === "T";
+	        }
+    	}
+    	function mathCalc(...param) {
+        	const arrayClass = [HWMath, TWMath, DWMath, DWTMath];
+        	const findClass = arrayClass.find(element => element.evaluate(param));
+        	return findClass.math(param);
+    	}
+    	console.log(mathCalc("H", "W"));
+    	console.log(mathCalc("T", "W"));
+    	console.log(mathCalc("D", "W"));
+    	console.log(mathCalc("D", "W", "T"));
+	</script>
+</body>
+</html>
